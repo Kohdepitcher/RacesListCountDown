@@ -16,6 +16,11 @@
 		E815DDF82695C075008185AC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E815DDF62695C075008185AC /* LaunchScreen.storyboard */; };
 		E815DE032695C075008185AC /* RacesListCountDownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE022695C075008185AC /* RacesListCountDownTests.swift */; };
 		E815DE0E2695C075008185AC /* RacesListCountDownUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE0D2695C075008185AC /* RacesListCountDownUITests.swift */; };
+		E815DE1D2695C9F8008185AC /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE1C2695C9F8008185AC /* DateFormatter+Extension.swift */; };
+		E815DE202695CAC8008185AC /* Race.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE1F2695CAC8008185AC /* Race.swift */; };
+		E815DE222695CB24008185AC /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE212695CB24008185AC /* Meeting.swift */; };
+		E815DE242695CB2E008185AC /* MeetingCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE232695CB2E008185AC /* MeetingCreator.swift */; };
+		E815DE272695CE6F008185AC /* ListRowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +56,11 @@
 		E815DE092695C075008185AC /* RacesListCountDownUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RacesListCountDownUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E815DE0D2695C075008185AC /* RacesListCountDownUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RacesListCountDownUITests.swift; sourceTree = "<group>"; };
 		E815DE0F2695C075008185AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E815DE1C2695C9F8008185AC /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
+		E815DE1F2695CAC8008185AC /* Race.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Race.swift; sourceTree = "<group>"; };
+		E815DE212695CB24008185AC /* Meeting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meeting.swift; sourceTree = "<group>"; };
+		E815DE232695CB2E008185AC /* MeetingCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCreator.swift; sourceTree = "<group>"; };
+		E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +111,10 @@
 		E815DDE72695C073008185AC /* RacesListCountDown */ = {
 			isa = PBXGroup;
 			children = (
+				E815DE252695CE23008185AC /* Views */,
+				E815DE232695CB2E008185AC /* MeetingCreator.swift */,
+				E815DE1E2695CAB2008185AC /* Models */,
+				E815DE1B2695C9EA008185AC /* Extensions */,
 				E815DDE82695C073008185AC /* AppDelegate.swift */,
 				E815DDEA2695C073008185AC /* SceneDelegate.swift */,
 				E815DDEC2695C073008185AC /* ViewController.swift */,
@@ -129,6 +143,31 @@
 				E815DE0F2695C075008185AC /* Info.plist */,
 			);
 			path = RacesListCountDownUITests;
+			sourceTree = "<group>";
+		};
+		E815DE1B2695C9EA008185AC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E815DE1C2695C9F8008185AC /* DateFormatter+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E815DE1E2695CAB2008185AC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E815DE1F2695CAC8008185AC /* Race.swift */,
+				E815DE212695CB24008185AC /* Meeting.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E815DE252695CE23008185AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,9 +300,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E815DE242695CB2E008185AC /* MeetingCreator.swift in Sources */,
+				E815DE222695CB24008185AC /* Meeting.swift in Sources */,
 				E815DDED2695C073008185AC /* ViewController.swift in Sources */,
+				E815DE272695CE6F008185AC /* ListRowCollectionViewCell.swift in Sources */,
 				E815DDE92695C073008185AC /* AppDelegate.swift in Sources */,
 				E815DDF32695C073008185AC /* RacesListCountDown.xcdatamodeld in Sources */,
+				E815DE1D2695C9F8008185AC /* DateFormatter+Extension.swift in Sources */,
+				E815DE202695CAC8008185AC /* Race.swift in Sources */,
 				E815DDEB2695C073008185AC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
