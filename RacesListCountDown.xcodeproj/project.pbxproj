@@ -3,10 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E8002262277C8ABB0012534E /* MeetingBrowserUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8002261277C8ABB0012534E /* MeetingBrowserUI.swift */; };
+		E8002264277C8BAE0012534E /* MeetingBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8002263277C8BAE0012534E /* MeetingBrowserViewModel.swift */; };
+		E800226A277C8EB20012534E /* RectPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8002267277C8EB20012534E /* RectPreference.swift */; };
+		E800226B277C8EB20012534E /* SegmentedControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8002268277C8EB20012534E /* SegmentedControlView.swift */; };
+		E800226C277C8EB20012534E /* UnderlineModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8002269277C8EB20012534E /* UnderlineModifier.swift */; };
+		E800226F277CA4630012534E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E800226E277CA4630012534E /* OrderedCollections */; };
 		E815DDE92695C073008185AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DDE82695C073008185AC /* AppDelegate.swift */; };
 		E815DDEB2695C073008185AC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DDEA2695C073008185AC /* SceneDelegate.swift */; };
 		E815DDED2695C073008185AC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DDEC2695C073008185AC /* ViewController.swift */; };
@@ -21,6 +27,16 @@
 		E815DE222695CB24008185AC /* Meeting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE212695CB24008185AC /* Meeting.swift */; };
 		E815DE242695CB2E008185AC /* MeetingCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE232695CB2E008185AC /* MeetingCreator.swift */; };
 		E815DE272695CE6F008185AC /* ListRowCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */; };
+		E83AB08327BE689B00DE266E /* HorizontalScrollingButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83AB08227BE689B00DE266E /* HorizontalScrollingButtons.swift */; };
+		E83AB08527C0E59000DE266E /* KPPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83AB08427C0E59000DE266E /* KPPicker.swift */; };
+		E83AB08727C0ED1100DE266E /* AKPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83AB08627C0ED1100DE266E /* AKPicker.swift */; };
+		E83AB08927C0EE5400DE266E /* AKPickerRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83AB08827C0EE5400DE266E /* AKPickerRepresentable.swift */; };
+		E84CE17926A575F500E27574 /* Custom SwiftUI View Styles.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84CE17826A575F500E27574 /* Custom SwiftUI View Styles.swift */; };
+		E8D2855F26E3B7A60075E513 /* RaceEditorUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D2855E26E3B7A60075E513 /* RaceEditorUI.swift */; };
+		E8D77AB1277F2BD9006F0F29 /* MeetingDetailUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D77AB0277F2BD9006F0F29 /* MeetingDetailUI.swift */; };
+		E8D77AB4277F2C97006F0F29 /* MeetingDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D77AB3277F2C97006F0F29 /* MeetingDetailViewModel.swift */; };
+		E8F9E92126A41F2C00A16355 /* RaceDataFetcherUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F9E92026A41F2C00A16355 /* RaceDataFetcherUI.swift */; };
+		E8F9E92326A434DD00A16355 /* CountDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F9E92226A434DD00A16355 /* CountDownCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +57,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E8002261277C8ABB0012534E /* MeetingBrowserUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingBrowserUI.swift; sourceTree = "<group>"; };
+		E8002263277C8BAE0012534E /* MeetingBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingBrowserViewModel.swift; sourceTree = "<group>"; };
+		E8002267277C8EB20012534E /* RectPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectPreference.swift; sourceTree = "<group>"; };
+		E8002268277C8EB20012534E /* SegmentedControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedControlView.swift; sourceTree = "<group>"; };
+		E8002269277C8EB20012534E /* UnderlineModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnderlineModifier.swift; sourceTree = "<group>"; };
 		E815DDE52695C073008185AC /* RacesListCountDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RacesListCountDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E815DDE82695C073008185AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E815DDEA2695C073008185AC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -61,6 +82,16 @@
 		E815DE212695CB24008185AC /* Meeting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meeting.swift; sourceTree = "<group>"; };
 		E815DE232695CB2E008185AC /* MeetingCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingCreator.swift; sourceTree = "<group>"; };
 		E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRowCollectionViewCell.swift; sourceTree = "<group>"; };
+		E83AB08227BE689B00DE266E /* HorizontalScrollingButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingButtons.swift; sourceTree = "<group>"; };
+		E83AB08427C0E59000DE266E /* KPPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPPicker.swift; sourceTree = "<group>"; };
+		E83AB08627C0ED1100DE266E /* AKPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKPicker.swift; sourceTree = "<group>"; };
+		E83AB08827C0EE5400DE266E /* AKPickerRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AKPickerRepresentable.swift; sourceTree = "<group>"; };
+		E84CE17826A575F500E27574 /* Custom SwiftUI View Styles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Custom SwiftUI View Styles.swift"; sourceTree = "<group>"; };
+		E8D2855E26E3B7A60075E513 /* RaceEditorUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceEditorUI.swift; sourceTree = "<group>"; };
+		E8D77AB0277F2BD9006F0F29 /* MeetingDetailUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailUI.swift; sourceTree = "<group>"; };
+		E8D77AB3277F2C97006F0F29 /* MeetingDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDetailViewModel.swift; sourceTree = "<group>"; };
+		E8F9E92026A41F2C00A16355 /* RaceDataFetcherUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RaceDataFetcherUI.swift; sourceTree = "<group>"; };
+		E8F9E92226A434DD00A16355 /* CountDownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountDownCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E800226F277CA4630012534E /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +120,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E8002265277C8E770012534E /* Custom SwiftUI Views */ = {
+			isa = PBXGroup;
+			children = (
+				E83AB08227BE689B00DE266E /* HorizontalScrollingButtons.swift */,
+				E8002266277C8E840012534E /* Scrolling Segmented Tab Bar */,
+				E83AB08427C0E59000DE266E /* KPPicker.swift */,
+				E83AB08627C0ED1100DE266E /* AKPicker.swift */,
+				E83AB08827C0EE5400DE266E /* AKPickerRepresentable.swift */,
+			);
+			path = "Custom SwiftUI Views";
+			sourceTree = "<group>";
+		};
+		E8002266277C8E840012534E /* Scrolling Segmented Tab Bar */ = {
+			isa = PBXGroup;
+			children = (
+				E8002267277C8EB20012534E /* RectPreference.swift */,
+				E8002268277C8EB20012534E /* SegmentedControlView.swift */,
+				E8002269277C8EB20012534E /* UnderlineModifier.swift */,
+			);
+			path = "Scrolling Segmented Tab Bar";
+			sourceTree = "<group>";
+		};
 		E815DDDC2695C073008185AC = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +165,8 @@
 		E815DDE72695C073008185AC /* RacesListCountDown */ = {
 			isa = PBXGroup;
 			children = (
+				E8D77AB2277F2C75006F0F29 /* View Models */,
+				E8002265277C8E770012534E /* Custom SwiftUI Views */,
 				E815DE252695CE23008185AC /* Views */,
 				E815DE232695CB2E008185AC /* MeetingCreator.swift */,
 				E815DE1E2695CAB2008185AC /* Models */,
@@ -166,8 +222,23 @@
 			isa = PBXGroup;
 			children = (
 				E815DE262695CE6F008185AC /* ListRowCollectionViewCell.swift */,
+				E8F9E92026A41F2C00A16355 /* RaceDataFetcherUI.swift */,
+				E8D2855E26E3B7A60075E513 /* RaceEditorUI.swift */,
+				E8F9E92226A434DD00A16355 /* CountDownCell.swift */,
+				E84CE17826A575F500E27574 /* Custom SwiftUI View Styles.swift */,
+				E8002261277C8ABB0012534E /* MeetingBrowserUI.swift */,
+				E8D77AB0277F2BD9006F0F29 /* MeetingDetailUI.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		E8D77AB2277F2C75006F0F29 /* View Models */ = {
+			isa = PBXGroup;
+			children = (
+				E8002263277C8BAE0012534E /* MeetingBrowserViewModel.swift */,
+				E8D77AB3277F2C97006F0F29 /* MeetingDetailViewModel.swift */,
+			);
+			path = "View Models";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,6 +257,9 @@
 			dependencies = (
 			);
 			name = RacesListCountDown;
+			packageProductDependencies = (
+				E800226E277CA4630012534E /* OrderedCollections */,
+			);
 			productName = RacesListCountDown;
 			productReference = E815DDE52695C073008185AC /* RacesListCountDown.app */;
 			productType = "com.apple.product-type.application";
@@ -257,6 +331,9 @@
 				Base,
 			);
 			mainGroup = E815DDDC2695C073008185AC;
+			packageReferences = (
+				E800226D277CA4630012534E /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = E815DDE62695C073008185AC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -300,14 +377,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E84CE17926A575F500E27574 /* Custom SwiftUI View Styles.swift in Sources */,
 				E815DE242695CB2E008185AC /* MeetingCreator.swift in Sources */,
+				E8D2855F26E3B7A60075E513 /* RaceEditorUI.swift in Sources */,
+				E8D77AB4277F2C97006F0F29 /* MeetingDetailViewModel.swift in Sources */,
 				E815DE222695CB24008185AC /* Meeting.swift in Sources */,
+				E8002262277C8ABB0012534E /* MeetingBrowserUI.swift in Sources */,
+				E800226C277C8EB20012534E /* UnderlineModifier.swift in Sources */,
 				E815DDED2695C073008185AC /* ViewController.swift in Sources */,
+				E8002264277C8BAE0012534E /* MeetingBrowserViewModel.swift in Sources */,
 				E815DE272695CE6F008185AC /* ListRowCollectionViewCell.swift in Sources */,
 				E815DDE92695C073008185AC /* AppDelegate.swift in Sources */,
 				E815DDF32695C073008185AC /* RacesListCountDown.xcdatamodeld in Sources */,
 				E815DE1D2695C9F8008185AC /* DateFormatter+Extension.swift in Sources */,
+				E83AB08327BE689B00DE266E /* HorizontalScrollingButtons.swift in Sources */,
+				E8D77AB1277F2BD9006F0F29 /* MeetingDetailUI.swift in Sources */,
 				E815DE202695CAC8008185AC /* Race.swift in Sources */,
+				E800226A277C8EB20012534E /* RectPreference.swift in Sources */,
+				E8F9E92126A41F2C00A16355 /* RaceDataFetcherUI.swift in Sources */,
+				E800226B277C8EB20012534E /* SegmentedControlView.swift in Sources */,
+				E83AB08727C0ED1100DE266E /* AKPicker.swift in Sources */,
+				E83AB08927C0EE5400DE266E /* AKPickerRepresentable.swift in Sources */,
+				E8F9E92326A434DD00A16355 /* CountDownCell.swift in Sources */,
+				E83AB08527C0E59000DE266E /* KPPicker.swift in Sources */,
 				E815DDEB2695C073008185AC /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -641,6 +733,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E800226D277CA4630012534E /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E800226E277CA4630012534E /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E800226D277CA4630012534E /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E815DDF12695C073008185AC /* RacesListCountDown.xcdatamodeld */ = {

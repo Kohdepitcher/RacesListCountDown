@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20G95" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDMeeting" representedClassName="CDMeeting" syncable="YES" codeGenerationType="class">
+        <attribute name="meetingDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="meetingLocation" optional="YES" attributeType="String"/>
+        <relationship name="races" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDRace" inverseName="meeting" inverseEntity="CDRace"/>
+    </entity>
     <entity name="CDRace" representedClassName="CDRace" syncable="YES" codeGenerationType="class">
         <attribute name="localStartTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="order" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="raceNumber" optional="YES" attributeType="String"/>
         <attribute name="raceTitle" optional="YES" attributeType="String"/>
+        <attribute name="raceUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="meeting" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDMeeting" inverseName="races" inverseEntity="CDMeeting"/>
     </entity>
     <elements>
-        <element name="CDRace" positionX="-63" positionY="-18" width="128" height="103"/>
+        <element name="CDMeeting" positionX="-296.3902587890625" positionY="-157.8814697265625" width="128" height="88"/>
+        <element name="CDRace" positionX="-44.83935546875" positionY="-187.9197998046875" width="128" height="119"/>
     </elements>
 </model>

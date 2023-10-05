@@ -19,7 +19,7 @@ class ListRowCollectionViewCell: UICollectionViewCell {
      *  Local copy of the race data
      *  Set by the configure function down below
      */
-    private var race: Race!
+    private var race: CDRace!
     
     //Define views
     lazy var RaceNumberLabel: UILabel = {
@@ -119,15 +119,15 @@ class ListRowCollectionViewCell: UICollectionViewCell {
      *  This configures the cell
      *  Requires an Race object as a parameter
      */
-    func configure(with race: Race) {
+    func configure(with race: CDRace) {
         
         //set the local race var to the passed parameter
         self.race = race
         
         //set the text in the labels
-        self.RaceNumberLabel.text = "Race \(race.RaceNumber)"
-        self.RaceTimeLabel.text = DateFormatter.HourMinuteFormatter.string(from: race.LocalStartTime)
-        self.RaceTitleLabel.text = race.RaceTitle
+        self.RaceNumberLabel.text = "Race " + race.raceNumber!
+        self.RaceTimeLabel.text = DateFormatter.HourMinuteFormatter.string(from: race.localStartTime!)
+        self.RaceTitleLabel.text = race.raceTitle
         
         //show initial time left until race
         UpdateRemainingTime()
@@ -141,19 +141,20 @@ class ListRowCollectionViewCell: UICollectionViewCell {
         
         //date as of now
         let currentDate = Date()
-        print("currentDate: \(currentDate)")
-        print("startTime: \(race.LocalStartTime)")
+//        print("currentDate: \(currentDate)")
+//        print("startTime: \(race.localStartTime!)")
         
         //get the amount of seconds from now and the local start time of the race
-        let delta = Calendar.current.dateComponents([.second], from: currentDate, to: race.LocalStartTime)
+        let delta = Calendar.current.dateComponents([.second], from: currentDate, to: race.localStartTime!)
         
         //store the delta as seconds
         let deltaAsSeconds = delta.second
         
         //format the delta seconds into a normal format
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
+        formatter.allowedUnits = deltaAsSeconds! <= 300 ? [.hour, .minute, .second] : [.hour, .minute]
         formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
         
         
         
@@ -163,6 +164,34 @@ class ListRowCollectionViewCell: UICollectionViewCell {
             self.TimeRemainingLabel.text = formatter.string(from: delta)!
         }
         
+    }
+    
+    //highlighted cell state
+    override var isHighlighted: Bool {
+        didSet {
+            
+            //if the cell is highlighted
+            if isHighlighted == true {
+                
+                
+                UIView.animate(withDuration: 0.15) {
+                    self.transform = .init(scaleX: 0.95, y: 0.95)
+                }
+                
+            }
+            
+            //if the cell is unhighlighted
+            else {
+                
+                
+                UIView.animate(withDuration: 0.15) {
+                    self.transform = .identity
+                }
+                
+                
+            }
+            
+        }
     }
     
 //    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {

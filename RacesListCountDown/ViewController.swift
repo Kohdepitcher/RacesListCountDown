@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController, UICollectionViewDelegate {
+class ViewController: UIViewController {
     
     //Properties
     var modal = MeetingModel()
@@ -19,6 +20,12 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     //Define views
     var titleLabel: UILabel!
+    
+    //reference to app delegate
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    //reference to the managed context in the app delegate
+    private let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     //collectionview
     lazy var ListCollectionView: UICollectionView = {
@@ -60,23 +67,63 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         return collectionView
     }()
+    
+    lazy var fetchedResultsController: NSFetchedResultsController<CDMeeting> = {
+            
+            //init fetch request
+            let fetchRequest: NSFetchRequest<CDMeeting> = CDMeeting.fetchRequest()
+        
+        
+            
+            //add sort descriptors
+            let sort = NSSortDescriptor(key: "meetingDate", ascending: true)
+            fetchRequest.sortDescriptors = [sort]
+            
+            //init fetfhed results controller
+            let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.managedContext, sectionNameKeyPath: nil, cacheName: nil)
+            
+            fetchedResultsController.delegate = self
+            return fetchedResultsController
+        }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        //try fetching the meeting from core data
+        do {
+            try fetchedResultsController.performFetch()
+            
+        } catch {
+            
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        
+        
+        
         //enable large titles
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.topItem?.title = getMeetingRaceLocation()
 
         //reference to the navigation bar used by this VC's navigation controller
         guard let navigationBar = self.navigationController?.navigationBar else { return }
+        
+        
+        //setup the right bar button item in nav bar
+        //let downloadRacesBarButton = UIBarButtonItem(image: UIImage(systemName: "arrow.down.circle"), style: .plain, target: self, action: #selector(showFetchRaceDataScreen(_:)))
+        //self.navigationItem.rightBarButtonItem = downloadRacesBarButton
+        
+        //menu button
+        let menuButton = UIBarButtonItem(systemItem: .edit, primaryAction: nil, menu: createMenu())
+        self.navigationItem.rightBarButtonItem = menuButton
         
         //init the Label used above the large title
         titleLabel = UILabel()
         
         //setup properties for the titleLabel
-        titleLabel.text = DateFormatter.monthLongAndShortDay.string(from: modal.meetingDate)//"THURSDAY, 8 JUL"
-        titleLabel.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        titleLabel.text = getFormattedMeetingDateFromFirstRace().uppercased()
+        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         titleLabel.textColor = .secondaryLabel
         
         //add the title label to the navigation bar
@@ -113,7 +160,101 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         //start the timer to calculate reminaing time for each race cell
         createTimer()
     }
+    
+    private func createMenu() -> UIMenu {
+        
+        let clearAction = UIAction(title: "Clear Meeting", image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [self] action in
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDMeeting")
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+            
+            do {
+                try self.managedContext.execute(deleteRequest)
+            } catch let error as NSError {
+              debugPrint(error)
+            }
+            
+            //self.managedContext.refreshAllObjects()
+            
+            //try fetching the meeting from core data
+//            do {
+//                try fetchedResultsController.performFetch()
+//
+//            } catch {
+//
+//                let nserror = error as NSError
+//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+//            }
+            
+//            var snapshot = NSDiffableDataSourceSnapshot<Section, CDRace>()
+//            snapshot.appendSections(Section.allCases)
+//            snapshot.deleteAllItems()
+            
+            var snapshot = dataSource.snapshot()
+            snapshot.deleteAllItems()
+            dataSource.apply(snapshot)
+            
+            
+            //self.applySnapShot()
+            self.titleLabel.text = ""
+        }
+        
+        
+        
+        
+        
+        //store the menu actions
+        let menuActions: [UIAction] = [clearAction]
+        
+        return UIMenu(title: "", children: menuActions)
+    }
+    
+    /*
+     *  Formats the date from the meeting and returns it in the custom format
+     *  Is used in the navigation bar's subtitle
+     */
+    private func getFormattedMeetingDateFromFirstRace() -> String {
+        
+        if let meeting = fetchedResultsController.fetchedObjects?.first {
+            guard let meetingDate = meeting.meetingDate else {return ""}
+            
+            return DateFormatter.monthLongAndShortDay.string(from: meetingDate) //"THURSDAY, 8 JUL"
+        } else {
+            return ""
+        }
+        
+    }
+    
+    /*
+     *  Gets the meeting's location safely from the fetched results controller
+     *  Is used in the navigation bar's title
+     */
+    private func getMeetingRaceLocation() -> String {
+        
+        if let meeting = fetchedResultsController.fetchedObjects?.first {
+            guard let meetingLocation = meeting.meetingLocation else {return "Races"}
+            
+            return meetingLocation
+        } else {
+            return "Races"
+        }
+        
+    }
 
+    
+    //Functions
+    @objc func showFetchRaceDataScreen(_ sender: UIBarButtonItem) {
+        
+        //stop the timer
+        //self.timer?.invalidate()
+        
+        self.present(RaceDataFetcherUIViewController(), animated: true) {
+            //self.applySnapShot()
+            
+            print("Start")
+        }
+        
+    }
 
 }
 
@@ -198,8 +339,8 @@ extension ViewController: UIScrollViewDelegate {
 //
 //        titleLabel.alpha = progress
         
-        print("subtitle label alpha: \(progress) ")
-        print("scrollview offset \(scrollView.contentOffset.y)")
+//        print("subtitle label alpha: \(progress) ")
+//        print("scrollview offset \(scrollView.contentOffset.y)")
         
         
         var offset: CGFloat = scrollView.contentOffset.y + 143
@@ -232,7 +373,7 @@ private extension ViewController {
     /*
      *  This func is responsible for configuring the datasource for the collection view
      */
-    func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Race> {
+    func makeDataSource() -> UICollectionViewDiffableDataSource<Section, CDRace> {
         
         UICollectionViewDiffableDataSource(collectionView: ListCollectionView, cellProvider: { ListCollectionView, indexPath, race in
             
@@ -252,40 +393,74 @@ private extension ViewController {
      */
     private func applySnapShot(animatingDifferences: Bool = true) {
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Race>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, CDRace>()
         snapshot.appendSections(Section.allCases)
         
-        snapshot.appendItems(modal.meeting.Races, toSection: Section.main)
+        guard let meeting = fetchedResultsController.fetchedObjects?.first else { return }
+        guard let races = meeting.races?.allObjects as? [CDRace] else { return }
+        
+        let sortedRaces = races.sorted { $0.order < $1.order }
+        
+        snapshot.appendItems(sortedRaces, toSection: Section.main)
         
         dataSource.apply(snapshot)
 
-        //get the fetched objects from the fetched results controller
-        //if there's none, use an empty array
-        //there should always be units
-//        let fetched = unitsProvider.fetchedObjects ?? []
-//
-//        //set the snapshot to a new snapshot
-//        snapShot = DataSourceSnapShot()
-//
-//        //append all the possible sections
-//        snapShot.appendSections(collectionViewSections.allCases)
-//
-//        /*
-//         *  Determines which items to show based on editing status
-//         *  If in ediitng mode, show all the objects from the fetched results controller
-//         *  If not in editing mode, show only those that are 'enabled' i.e. not hiddenß
-//         */
-//        snapShot.appendItems( self.isEditing ? fetched : fetched.filter{ $0.isEnabled == true } , toSection: .units)
-//
-//        //append a 'fake' or 'empty' CDUnit so that the add button appears
-////        snapShot.appendItems([CDUnit()], toSection: .add)
-//
-//        //finally apply the new snapshot changes to the datasource
-//        dataSource.apply(snapShot, animatingDifferences: animatingDifferences, completion: { [self] in
-//            dataSource.apply(snapShot, animatingDifferences: false)
-//        })
     }
     
+}
+
+extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+//        let EditorVC = RaceEditorUIViewController()
+//        EditorVC.context = self.managedContext
+//
+//        self.present(EditorVC, animated: true, completion: nil)
+    }
+    
+}
+
+extension ViewController: NSFetchedResultsControllerDelegate {
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+                print("controllerDidChangeContent")
+
+                do {
+                    try fetchedResultsController.performFetch()
+
+                    //update the navigation bar incase the meeting date or location has changed
+                    titleLabel.text = getFormattedMeetingDateFromFirstRace()
+                    navigationController?.navigationBar.topItem?.title = getMeetingRaceLocation()
+
+                } catch let error as NSError {
+                    print(error)
+                }
+
+
+                applySnapShot()
+    }
+    
+//    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
+//
+//        var snapshot = snapshot as NSDiffableDataSourceSnapshot<Section, NSManagedObjectID>
+//        let currentSnapshot = dataSource.snapshot() as NSDiffableDataSourceSnapshot<Section, NSManagedObjectID>
+//
+//        let reloadIdentifiers: [NSManagedObjectID] = snapshot.itemIdentifiers.compactMap { itemIdentifier in
+//            guard let currentIndex = currentSnapshot.indexOfItem(itemIdentifier), let index = snapshot.indexOfItem(itemIdentifier), index == currentIndex else {
+//                return nil
+//            }
+//            guard let existingObject = try? controller.managedObjectContext.existingObject(with: itemIdentifier), existingObject.isUpdated else { return nil }
+//            return itemIdentifier
+//        }
+//
+//        snapshot.reloadItems(reloadIdentifiers)
+//
+//        snapshot.appendSections([.main])
+//        snapshot.appendItems([NSManagedObjectID()], toSection: .main)
+//
+//        dataSource.apply(snapshot as NSDiffableDataSourceSnapshot<Section, NSManagedObjectID>, animatingDifferences: false)
+//    }
 }
 
 
