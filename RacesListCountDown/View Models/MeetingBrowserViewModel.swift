@@ -26,69 +26,80 @@ struct ViewValue {
 
 class MeetingBrowserViewModel: ObservableObject {
     
-    
-    
-    @Published public var fetchedMeetingList: OrderedDictionary<Date, [MeetingOption]> = [:]//[String : [MeetingOption]] = ["": []]
+    /// Public observables
+    @Published public var fetchedMeetingList: OrderedDictionary<Date, [MeetingOption]> = [:]
     @Published public var isLoading: Bool = false
-    
-//    public let availableStates: [ViewValue] = [
-//        ViewValue(value: "QLD", viewValue: "Queensland"),
-//        ViewValue(value: "NSW", viewValue: "New South Wales"),
-//        ViewValue(value: "VIC", viewValue: "Victoria"),
-//        ViewValue(value: "ACT", viewValue: "Austalian Capital Territory")
-//        ViewValue(value: "NT", viewValue: "Northern Teritory"),
-//        ViewValue(value: "SA", viewValue: "South Australia"),
-//        ViewValue(value: "WA", viewValue: "Western Australia")
-//    ]
-    
-    public let states = ["QLD", "NSW", "VIC", "WA", "SA", "TAS", "NT", "ACT"]
-    
     @Published public var selectedStateIndex = 0
     
+    /// List of available states for the picker
+    public let availableStates: [ViewValue] = [
+        ViewValue(value: "QLD", viewValue: "Queensland"                     ),
+        ViewValue(value: "NSW", viewValue: "New South Wales"                ),
+        ViewValue(value: "VIC", viewValue: "Victoria"                       ),
+        ViewValue(value: "ACT", viewValue: "Australian Capital Territory"   ),
+        ViewValue(value: "NT",  viewValue: "Northern Territory"             ),
+        ViewValue(value: "SA",  viewValue: "South Australia"                ),
+        ViewValue(value: "WA",  viewValue: "Western Australia"              )
+    ]
+    
+    
+    /// Load some initial meetings when view is initialised
     init() {
         self.fetchMeetingsForSelectState()
     }
     
     public func fetchMeetingsForSelectState() {
         
-        //reset the meeting list
+        /// Show loading indicator
+        self.isLoading = true
+        
+        /// Reset the meeting list
         self.fetchedMeetingList = [:]
         
-        //Setup the URL
+        /// Setup the URL
         var components = URLComponents()
         components.scheme = "https"
         components.host = "m.racingaustralia.horse"
         components.path = "/FreeFields/Calendar.aspx"
-        components.query = "State=" + states[selectedStateIndex]
+        components.query = "State=" + availableStates[selectedStateIndex].value
         
-        //create a URL using the components
+        /// create a URL using the components
         let URL = components.url
         
-        URLSession.shared.dataTask(with: URL!) { data, response, error in
+        /// Try to fetch the meetings JSON from the server
+        URLSession.shared.dataTask(with: URL!) { [self] data, response, error in
             
             if let data = data {
                 
                 do {
+                    
+                    /// Decode the data
                     let decoder = JSONDecoder()
                     decoder.dateDecodingStrategy = .formatted(DateFormatter.dayLongMonthYear)
                     
                     let response = try decoder.decode(MeetingList.self, from: data)
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { [self] in
+                        
+                        /// Store the meeting list
                         let tempHolder: MeetingList = response
                         
+                        /// Group meetings by meeting date
                         let groupedMeetings = OrderedDictionary<Date, [MeetingOption]>(grouping: tempHolder.Meetings, by: {$0.MeetDate })
                         
+                        /// Store grouped meetings to be displayed in the UI
                         self.fetchedMeetingList = groupedMeetings
+                        
+                        /// Hide loading Indicator
+                        isLoading = false
                     }
-                    
-                    
-                    
-
                     
                 }
                 catch let error {
                     print(error)
+                    
+                    /// Hide loading Indicator
+                    isLoading = false
                 }
             }
             

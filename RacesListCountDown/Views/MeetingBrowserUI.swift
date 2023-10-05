@@ -10,13 +10,13 @@ import UIKit
 
 //MARK: - Protocol for interacting between SwiftUI and UIKit
 //this is responsible for delegating back up any interactions with the swiftui view to the settings hosting controller
-protocol MettingBrowserVCInteractionDelegate {
+protocol MeetingBrowserVCInteractionDelegate {
     
 }
 
 //MARK: - Hosting View Controller Definition
 //this is the hosting view controller to present this swiftui view within the UIKIT hierachy
-class MeetingBrowserUIViewController: UIViewController, MettingBrowserVCInteractionDelegate {
+class MeetingBrowserUIViewController: UIViewController, MeetingBrowserVCInteractionDelegate {
     
     //create a hosting controller that has this settingsUI as its root view
     let contentView = UIHostingController(rootView: MeetingBrowserUI())
@@ -43,7 +43,7 @@ class MeetingBrowserUIViewController: UIViewController, MettingBrowserVCInteract
 
 struct MeetingBrowserUI: View {
     
-    var interactionDelegate: MettingBrowserVCInteractionDelegate?
+    var interactionDelegate: MeetingBrowserVCInteractionDelegate?
     
     @ObservedObject var viewModel = MeetingBrowserViewModel()
     
@@ -52,24 +52,22 @@ struct MeetingBrowserUI: View {
         NavigationView {
             
             VStack(spacing: 0) {
-//                SegmentedControlView(selectedIndex: $viewModel.selectedStateIndex, titles: viewModel.states)
-//                    .onChange(of: viewModel.selectedStateIndex) {newValue in
-//                        viewModel.fetchMeetingsForSelectState()
-//                    }
-                     //.background(Color.red)
-                    //.frame(maxHeight: .infinity, alignment: .top)
-                //HorizontalScrollingButtons(titles: ["Queensland", "New South Wales", "Victoria"])
-                    //.frame(height: 40)
-                
-//                AKPickerRepresentable(items: viewModel.states, selectedIndex: $viewModel.selectedStateIndex)
-//                    .onChange(of: viewModel.selectedStateIndex) {newValue in
-//                        viewModel.fetchMeetingsForSelectState()
-//                    }
-//                    .frame(height: 40)
                 
                     List {
                         
+                        /// State picker
+                        Picker("Choose State", selection: $viewModel.selectedStateIndex) {
+                            ForEach(viewModel.availableStates.indices, id: \.self) { index in
+                                Text(viewModel.availableStates[index].viewValue)
+                                    .tag(index)
+                            }
+                        }
+                        .pickerStyle(.menu)
                         
+                        /// Fetch meetings for the currently selected state
+                        .onChange(of: viewModel.selectedStateIndex) { _ in
+                            viewModel.fetchMeetingsForSelectState()
+                        }
                         
                         ForEach(viewModel.fetchedMeetingList.sorted(by: {$0.key < $1.key}), id: \.key) { key, value in
                             Section(header: Text(DateFormatter.dayLongMonthYear.string(from: key))) {
@@ -101,17 +99,18 @@ struct MeetingBrowserUI: View {
 
             }//.onAppear(perform: {viewModel.fetchMeetingsForSelectState()})
                 .navigationTitle("Meetings")
-                .toolbar {
-                            ToolbarItemGroup(placement: .bottomBar) {
-                                AKPickerRepresentable(items: viewModel.states, selectedIndex: $viewModel.selectedStateIndex)
-                                    .onChange(of: viewModel.selectedStateIndex) {newValue in
-                                        viewModel.fetchMeetingsForSelectState()
-                                    }
-                                    .frame(height: 40)
-                            }
-                        }
         }
         
+        /// Loading overlay
+        .overlay {
+            if viewModel.isLoading {
+                HStack(spacing: 10) {
+                    ProgressView()
+                    Text("Loading")
+                }
+                    .animation(.easeInOut, value: viewModel.isLoading)
+            }
+        }
         
         
     }
