@@ -87,7 +87,7 @@ class ListRowCollectionViewCell: UICollectionViewCell {
         self.layer.borderWidth = 0
         
         //set the color for the border selection indicator
-        self.layer.borderColor = UIColor.systemGreen.cgColor
+        self.layer.borderColor = UIColor(named: "AccentColor")?.cgColor
         
         //set background color of cell from xcassets
         self.backgroundColor = UIColor(named: "Cell Background Color")
@@ -119,7 +119,7 @@ class ListRowCollectionViewCell: UICollectionViewCell {
      *  This configures the cell
      *  Requires an Race object as a parameter
      */
-    func configure(with race: CDRace) {
+    func configure(with race: CDRace, isNextRace: Bool = false) {
         
         //set the local race var to the passed parameter
         self.race = race
@@ -128,6 +128,8 @@ class ListRowCollectionViewCell: UICollectionViewCell {
         self.RaceNumberLabel.text = "Race " + race.raceNumber!
         self.RaceTimeLabel.text = DateFormatter.HourMinuteFormatter.string(from: race.localStartTime!)
         self.RaceTitleLabel.text = race.raceTitle
+        
+        self.layer.borderWidth = isNextRace ? 2 : 0
         
         //show initial time left until race
         UpdateRemainingTime()
