@@ -15,6 +15,8 @@ struct MeetingDetailUI: View {
     
     @ObservedObject var viewModel = MeetingDetailViewModel()
     
+    @State private var showMessage = false
+    
     init(MeetingKey: String, MeetingVenue: String, MeetingDate: Date) {
         
         self.MeetingKey = MeetingKey
@@ -61,6 +63,10 @@ struct MeetingDetailUI: View {
                     viewModel.saveMeetingToCoreData(MeetingVenue: MeetingVenue, MeetingDate: MeetingDate)
                     //interactionDelegate?.dismissHostingController()
                     
+                    withAnimation {
+                        self.showMessage.toggle()
+                    }
+                    
                 }) {
                     
                     HStack {
@@ -69,6 +75,7 @@ struct MeetingDetailUI: View {
                     }
                     .foregroundColor(Color.accentColor)
                 }
+                .buttonStyle(.plain)
                 .disabled(viewModel.fetchedRaceList.Races.isEmpty)
                 
             }
@@ -83,6 +90,29 @@ struct MeetingDetailUI: View {
             
         }
         .navigationTitle(MeetingVenue)
+        
+        .overlay {
+            
+            if showMessage {
+                
+                VStack {
+                    Text(viewModel.fetchedRaceList.Races.count == 1 ? "Saved \(viewModel.fetchedRaceList.Races.count) Race" : "Saved \(viewModel.fetchedRaceList.Races.count) Races")
+                }
+                .padding()
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .animation(.easeInOut, value: self.showMessage)
+                .onAppear {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        withAnimation {
+                            self.showMessage.toggle()
+                        }
+                    }
+                }
+                
+            }
+
+        }
         
     }
 }
