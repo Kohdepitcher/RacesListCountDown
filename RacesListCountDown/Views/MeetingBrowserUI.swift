@@ -107,6 +107,7 @@ struct MeetingBrowserUI: View {
                 HStack(spacing: 10) {
                     ProgressView()
                     Text("Loading")
+                        .foregroundStyle(Color.secondary)
                 }
                     .animation(.easeInOut, value: viewModel.isLoading)
             }
