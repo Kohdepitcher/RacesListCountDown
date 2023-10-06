@@ -10,6 +10,12 @@ Built as tool to make my life a bit easier in a previous career. It became a lit
  - View a meeting in detail and save it locally for tracking
  - View a list of the saved races and a count down timer to when they start
 
+## Installation
+ 1. Clone/download the repo and open up the Xcode project.
+ 2. In the project navigator, select the `RacesListCountDown` project in the project navigator
+ 3. Go to the `Signing & Capabilities` tab and change the team for each target to your own
+ 4. Finally run the `RacesListCountDown` target and build to a Simulator or a physical device
+
 ## Screenshots
 | ![Alt text](/Screenshots/Home_Screen.png?raw=true "Home Screen") | ![Alt text](/Screenshots/Meeting_Browser_Screen.png?raw=true "Meeting Browser") |
 |--|--|
