@@ -159,51 +159,60 @@ class ViewController: UIViewController {
         
         //start the timer to calculate reminaing time for each race cell
         createTimer()
+        
+        showHideEmptyMessage()
     }
     
     private func createMenu() -> UIMenu {
         
         let clearAction = UIAction(title: "Clear Meeting", image: UIImage(systemName: "trash.fill"), attributes: .destructive) { [self] action in
             
+            /// https://www.advancedswift.com/batch-delete-everything-core-data-swift/
+            
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CDMeeting")
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
             
+                /// Specify the result of the NSBatchDeleteRequest
+                /// should be the NSManagedObject IDs for the
+                /// deleted objects
+                deleteRequest.resultType = .resultTypeObjectIDs
+            
             do {
-                try self.managedContext.execute(deleteRequest)
+                
+                /// Perform the batch delete
+                let batchDelete = try self.managedContext.execute(deleteRequest) as? NSBatchDeleteResult
+                
+                guard let deleteResult = batchDelete?.result as? [NSManagedObjectID] else { return }
+
+                let deletedObjects: [AnyHashable: Any] = [
+                    NSDeletedObjectsKey: deleteResult
+                ]
+
+                /// Merge the delete changes into the managed
+                /// object context
+                NSManagedObjectContext.mergeChanges(
+                    fromRemoteContextSave: deletedObjects,
+                    into: [self.managedContext]
+                )
+                
+                /// Reset nav title label
+                self.navigationController?.navigationBar.topItem?.title = "Races"
+                
+                
             } catch let error as NSError {
               debugPrint(error)
             }
             
-            //self.managedContext.refreshAllObjects()
-            
-            //try fetching the meeting from core data
-//            do {
-//                try fetchedResultsController.performFetch()
-//
-//            } catch {
-//
-//                let nserror = error as NSError
-//                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-//            }
-            
-//            var snapshot = NSDiffableDataSourceSnapshot<Section, CDRace>()
-//            snapshot.appendSections(Section.allCases)
-//            snapshot.deleteAllItems()
             
             var snapshot = dataSource.snapshot()
             snapshot.deleteAllItems()
             dataSource.apply(snapshot)
             
-            
-            //self.applySnapShot()
+            /// Clear the date label above the navigation title
             self.titleLabel.text = ""
         }
         
-        
-        
-        
-        
-        //store the menu actions
+        /// store the menu actions
         let menuActions: [UIAction] = [clearAction]
         
         return UIMenu(title: "", children: menuActions)
@@ -252,6 +261,19 @@ class ViewController: UIViewController {
             //self.applySnapShot()
             
             print("Start")
+        }
+        
+    }
+    
+    private func showHideEmptyMessage() {
+        
+        guard let items = fetchedResultsController.fetchedObjects else { return }
+        if items.isEmpty {
+            self.ListCollectionView.setEmptyMessage("""
+                                                        No races to show \n Try saving a meeting from the meeting tab
+                                                    """)
+        } else {
+            self.ListCollectionView.restore()
         }
         
     }
@@ -436,9 +458,10 @@ extension ViewController: NSFetchedResultsControllerDelegate {
                 } catch let error as NSError {
                     print(error)
                 }
-
-
+    
                 applySnapShot()
+        
+                showHideEmptyMessage()
     }
     
 //    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChangeContentWith snapshot: NSDiffableDataSourceSnapshotReference) {
@@ -463,5 +486,23 @@ extension ViewController: NSFetchedResultsControllerDelegate {
 //    }
 }
 
+extension UICollectionView {
+
+    func setEmptyMessage(_ message: String) {
+        let messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.bounds.size.width, height: self.bounds.size.height))
+        messageLabel.text = message
+        messageLabel.textColor = .secondaryLabel
+        messageLabel.numberOfLines = 0;
+        messageLabel.textAlignment = .center;
+//        messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
+        messageLabel.sizeToFit()
+
+        self.backgroundView = messageLabel;
+    }
+
+    func restore() {
+        self.backgroundView = nil
+    }
+}
 
 
